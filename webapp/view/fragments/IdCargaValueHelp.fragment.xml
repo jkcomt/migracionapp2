@@ -1,0 +1,107 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:f="sap.f"
+    xmlns:core="sap.ui.core">
+
+    <Dialog
+        id="idCargaValueHelpDialog"
+        title="Seleccionar ID de Carga"
+        contentWidth="50%"
+        contentHeight="400px"
+        draggable="true"
+        resizable="true">
+
+        <subHeader>
+            <OverflowToolbar>
+                <SearchField
+                    id="idCargaSearchField"
+                    width="170px"
+                    placeholder="Buscar por ID, usuario o estado..."
+                    liveChange=".onValueHelpSearch"/>
+
+                <DatePicker
+                    id="fechaCargaField"
+                    width="170px"
+                    placeholder="e.g. 31/12/2026"
+                    displayFormat="dd/MM/yyyy"
+                    valueFormat="yyyy-MM-dd" />
+
+                <Input
+                    id="usuarioSelectField"
+                    width="170px"
+                    placeholder="#50123"
+                    showValueHelp="false" />
+
+                <Select
+                    id="estadoSelectField"
+                    
+                    selectedKey="Todos">
+                    <core:Item key="Todos" text="Todos" />
+                    <core:Item key="Procesando" text="Procesando" />
+                    <core:Item key="Procesado" text="Procesado" />
+                    <core:Item key="Error" text="Error" />
+                </Select>
+
+                <Button
+                    text="Buscar"
+                    icon="sap-icon://search"
+                    type="Emphasized"
+                    press=".onBuscar" />
+
+                <Button
+                    text="Limpiar"
+                    type="Transparent"
+                    press=".onLimpiar" />
+            </OverflowToolbar>
+        </subHeader>
+
+        <content>
+            <Table
+                id="idCargaTable"
+                items="{oMainModel>/CargaMasiva}"
+                mode="None"
+                growing="true"
+                growingThreshold="15">
+
+                <columns>
+                    <Column width="35%">
+                        <Text text="ID Carga" />
+                    </Column>
+                    <Column width="25%">
+                        <Text text="Fecha de Carga" />
+                    </Column>
+                    <Column>
+                        <Text text="Usuario" />
+                    </Column>
+                    <Column>
+                        <Text text="Estado" />
+                    </Column>
+                </columns>
+
+                <items>
+                    <ColumnListItem type="Active" press=".onValueHelpItemPress">
+                        <cells>
+                            <Text text="{oMainModel>UploadUuid}" />
+                            <Text text="{oMainModel>LocalCreatedAt}" />
+                            <Text text="{oMainModel>LocalCreatedBy}" />
+                            <ObjectStatus
+                                text="{oMainModel>Status}"
+                                state="{= ${oMainModel>Status} === 'Procesado'
+                                    ? 'Success'
+                                    : ${oMainModel>Status} === 'Error'
+                                        ? 'Error'
+                                        : 'Warning' }" />
+                        </cells>
+                    </ColumnListItem>
+                </items>
+            </Table>
+        </content>
+
+        <endButton>
+            <Button
+                text="Cancelar"
+                press=".onValueHelpCancel" />
+        </endButton>
+    </Dialog>
+
+</core:FragmentDefinition>

@@ -1,0 +1,33 @@
+/* Enter your custom styles here */
+/* Enter your custom styles here */
+
+.textEmphatized {
+    color: #006dd3;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.textAccept {
+    color: #028C00;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.textAlert {
+    color: #C70000;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.textWarning {
+    color: #FF9100;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.noWrapObjectStatus .sapMObjStatusText {
+    width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}

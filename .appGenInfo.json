@@ -1,0 +1,24 @@
+{
+  "generationParameters": {
+    "generationDate": "Wed May 20 2026 14:37:44 GMT-0500 (Peru Standard Time)",
+    "generatorPlatform": "Visual Studio Code",
+    "serviceType": "SAP System (ABAP On-Premise)",
+    "metadataFilename": "",
+    "serviceUrl": "https://vhohcs4dci.sap.copec.cl:44300/sap/opu/odata4/sap/zui_carga_masiva_o4/srvd/sap/zsd_sd_carga_masiva/0001/",
+    "appName": "migrationapp",
+    "appTitle": "Log de Carga Masiva",
+    "appDescription": "Log de Carga Masiva",
+    "appNamespace": "cl.copec.migrationapp",
+    "ui5Theme": "sap_horizon",
+    "ui5Version": "1.120.30",
+    "enableEslint": true,
+    "enableTypeScript": false,
+    "showMockDataInfo": true,
+    "generatorVersion": "1.22.0",
+    "template": "Basic V4",
+    "generatorName": "SAP Fiori Application Generator",
+    "entityRelatedConfig": [],
+    "launchText": "To launch the generated application, run the following from the generated application root folder:\n\n```\n    npm start\n```",
+    "valueHelpDownloaded": true
+  }
+}

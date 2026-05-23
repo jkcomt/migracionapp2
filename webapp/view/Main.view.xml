@@ -1,0 +1,363 @@
+<mvc:View controllerName="cl.copec.migrationapp.migrationapp.controller.Main"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:f="sap.f"
+    xmlns:layout="sap.ui.layout"
+    xmlns:fb="sap.ui.comp.filterbar"
+    displayBlock="true">
+    <f:DynamicPage id="mainPage" fitContent="true" showFooter="true" headerExpanded="true"
+        toggleHeaderOnTitleClick="false"
+        preserveHeaderStateOnScroll="true">
+
+        <f:title>
+            <f:DynamicPageTitle>
+                <f:heading>
+                    <HBox alignItems="Center" renderType="Bare">
+                        <!-- <Image
+                            src="img/sap-logo.png"
+                            width="48px"
+                            height="24px"
+                            class="sapUiTinyMarginEnd" /> -->
+                        <Title
+                            text="Revisar Log de Carga Masiva"
+                            level="H2" />
+                    </HBox>
+                </f:heading>
+                <!-- <f:actions>
+                    <Button icon="sap-icon://search" type="Transparent" />
+                    <Button icon="sap-icon://filter" type="Transparent" />
+                    <Button icon="sap-icon://refresh" type="Transparent" press=".onRefresh" />
+                    <Button icon="sap-icon://download" type="Transparent" press=".onDownloadLog" />
+                </f:actions> -->
+            </f:DynamicPageTitle>
+        </f:title>
+        <!-- Filtros -->
+        <f:header>
+            <f:DynamicPageHeader>
+                <Panel class="sapUiNoContentPadding sapUiSmallMarginBottom">
+                    <content>
+                        <fb:FilterBar
+                            id="filterBar"
+                            class="customFilterBar"
+                            useToolbar="false"
+                            showGoOnFB="false"
+                            showClearOnFB="false"
+                            showFilterConfiguration="false"
+                        >
+                            <fb:filterGroupItems>
+                                <!-- ID de Carga -->
+                                <fb:FilterGroupItem
+                                    groupName="General"
+                                    name="IdCarga"
+                                    label="ID de Carga"
+                                    visibleInFilterBar="true">
+                                    <fb:control>
+                                        <Input
+                                            id="idCargaInput"
+                                            width="170px"
+                                            placeholder="#50123"
+                                            showValueHelp="true"
+                                            valueHelpRequest=".onIdCargaValueHelp" />
+                                    </fb:control>
+                                </fb:FilterGroupItem>
+
+                                <!-- Fecha de Carga -->
+                                <fb:FilterGroupItem
+                                    groupName="General"
+                                    name="FechaCarga"
+                                    label="Fecha de Carga"
+                                    visibleInFilterBar="true">
+                                    <fb:control>
+                                        <DatePicker
+                                            id="fechaCargaInput"
+                                            width="195px"
+                                            placeholder="e.g. 31/12/2026"
+                                            displayFormat="dd/MM/yyyy"
+                                            valueFormat="yyyy-MM-dd" editable="false"/>
+                                    </fb:control>
+                                </fb:FilterGroupItem>
+
+                                <!-- Usuario -->
+                                <fb:FilterGroupItem
+                                    groupName="General"
+                                    name="Usuario"
+                                    label="Usuario"
+                                    visibleInFilterBar="true">
+                                    <fb:control>
+                                        <Input id="usuarioSelect" editable="false"/>
+                                    </fb:control>
+                                </fb:FilterGroupItem>
+
+                                <!-- Estado -->
+                                <fb:FilterGroupItem
+                                    groupName="General"
+                                    name="Estado"
+                                    label="Estado"
+                                    visibleInFilterBar="true">
+                                    <fb:control>
+                                        <!-- <Select
+                                            id="estadoSelect"
+                                            width="140px"
+                                            selectedKey="Todos">
+                                            <core:Item key="Todos" text="Todos" />
+                                            <core:Item key="Pendiente" text="Pendiente" />
+                                            <core:Item key="Procesado" text="Procesado" />
+                                            <core:Item key="Error" text="Error" />
+                                        </Select> -->
+                                        <Input id="estadoSelect" editable="false"/>
+                                    </fb:control>
+                                </fb:FilterGroupItem>
+
+                                <!-- <fb:FilterGroupItem
+                                    groupName="General"
+                                    name="Acciones"
+                                    label=""
+                                    visibleInFilterBar="true">
+                                    <fb:control>
+                                        <HBox
+                                            alignItems="End"
+                                            class="filterBarButtons">
+                                            <Button
+                                                text="Buscar"
+                                                icon="sap-icon://search"
+                                                type="Emphasized"
+                                                press=".onBuscar" />
+
+                                            <Button
+                                                text="Limpiar"
+                                                type="Transparent"
+                                                press=".onLimpiar" />
+                                        </HBox>
+                                    </fb:control>
+                                </fb:FilterGroupItem> -->
+
+                            </fb:filterGroupItems>
+                        </fb:FilterBar>
+                    </content>
+                </Panel>
+                <core:HTML content="&lt;hr /&gt;" />
+                <!-- Indicadores -->
+                <Panel class="sapUiNoContentPadding">
+                    <HBox
+                        wrap="Wrap"
+                        alignItems="Center"
+                        justifyContent="SpaceBetween">
+
+                        <Panel height="auto">
+                            <HBox height="auto" alignContent="Center" alignItems="Center"
+                                displayInline="true" class="sapUiSmallMargin">
+
+                                <core:Icon src="sap-icon://document-text" size="50px"
+                                    class="sapUiSmallMarginEnd" color="#0E73DF"></core:Icon>
+
+                                <VBox height="100%">
+                                    <Text text="1500" class="textEmphatized"></Text>
+                                    <Title text="Total Registros"/>
+                                </VBox>
+                            </HBox>
+                        </Panel>
+                        <ToolbarSeparator></ToolbarSeparator>
+
+                        <Panel height="auto">
+                            <HBox height="auto" alignContent="Center" alignItems="Center"
+                                displayInline="true" class="sapUiSmallMargin">
+                                <core:Icon src="sap-icon://accept" size="50px"
+                                    class="sapUiSmallMarginEnd" color="#028C00"></core:Icon>
+                                <VBox height="100%">
+                                    <Text text="1420" class="textAccept"></Text>
+                                    <Title text="Total Procesados"/>
+                                </VBox>
+                            </HBox>
+                        </Panel>
+                        <ToolbarSeparator></ToolbarSeparator>
+
+                        <Panel height="auto">
+                            <HBox height="auto" alignContent="Center" alignItems="Center"
+                                displayInline="true" class="sapUiSmallMargin">
+                                <core:Icon src="sap-icon://alert" size="50px"
+                                    class="sapUiSmallMarginEnd" color="#C70000"></core:Icon>
+                                <VBox height="100%">
+                                    <Text text="50" class="textAlert"></Text>
+                                    <Title text="Con Errores"/>
+                                </VBox>
+                            </HBox>
+                        </Panel>
+                        <ToolbarSeparator></ToolbarSeparator>
+
+                        <Panel height="auto">
+                            <HBox height="auto" alignContent="Center" alignItems="Center"
+                                displayInline="true" class="sapUiSmallMargin">
+                                <core:Icon src="sap-icon://synchronize" size="50px"
+                                    class="sapUiSmallMarginEnd" color="#FF9100"></core:Icon>
+                                <VBox height="100%">
+                                    <Text text="30" class="textWarning"></Text>
+                                    <Title text="Pendientes"/>
+                                </VBox>
+                            </HBox>
+                        </Panel>
+
+                    </HBox>
+                </Panel>
+            </f:DynamicPageHeader>
+        </f:header>
+
+
+        <f:content>
+            <VBox class="">
+                <!-- Detalle -->
+                <Panel
+                    headerText="Detalle de Registros"
+                    expandable="false"
+                    class="sapUiNoContentPadding sapUiSmallMarginBottom">
+
+                    <content>
+                        <Table
+                            id="recordsTable"
+                            items="{viewModel>/records}"
+                            growing="true"
+                            growingScrollToLoad="true"
+                            inset="false">
+
+                            <columns>
+                                <Column width="4rem">
+                                    <Text text="" />
+                                </Column>
+                                <Column>
+                                    <Text text="ID Registro" />
+                                </Column>
+                                <Column>
+                                    <Text text="Pedido" />
+                                </Column>
+                                <Column minScreenWidth="Tablet" demandPopin="true">
+                                    <Text text="Entrega (Folio)" />
+                                </Column>
+                                <Column minScreenWidth="Tablet" demandPopin="true">
+                                    <Text text="SM" />
+                                </Column>
+                                <Column minScreenWidth="Desktop" demandPopin="true">
+                                    <Text text="Transporte" />
+                                </Column>
+                                <Column>
+                                    <Text text="Estado" />
+                                </Column>
+                                <Column minScreenWidth="Tablet" demandPopin="true">
+                                    <Text text="Etapa" />
+                                </Column>
+                                <Column minScreenWidth="Tablet" demandPopin="true">
+                                    <Text text="Mensaje de Log" />
+                                </Column>
+                            </columns>
+
+                            <items>
+                                <ColumnListItem type="Active" press=".onRecordPress">
+                                    <cells>
+
+                                        <ObjectStatus
+                                            icon="{= ${viewModel>status} === 'OK'
+                                                ? 'sap-icon://sys-enter-2'
+                                                : ${viewModel>status} === 'ERROR'
+                                                    ? 'sap-icon://message-error'
+                                                    : 'sap-icon://pending' }"
+                                            state="{= ${viewModel>status} === 'OK'
+                                                ? 'Success'
+                                                : ${viewModel>status} === 'ERROR'
+                                                    ? 'Error'
+                                                    : 'Warning' }" />
+
+                                        <Text text="{viewModel>id}" />
+
+                                        <Text text="{viewModel>order}" />
+
+                                        <VBox>
+                                            <ObjectIdentifier
+                                                title="{viewModel>delivery}"
+                                                class="sapUiTinyMarginBottom" />
+                                            <ObjectStatus
+                                                class="sapUiSmallMarginBottom noWrapObjectStatus"
+                                                text="{viewModel>folio}"
+                                                inverted="true"
+                                                state="Information" />
+                                        </VBox>
+
+                                        <Text text="{viewModel>sm}" />
+
+                                        <Text text="{viewModel>transport}" />
+
+                                        <ObjectStatus
+                                            class="sapUiSmallMarginBottom noWrapObjectStatus"
+                                            text="{= ${viewModel>status} === 'OK'
+                                                ? 'Procesado OK'
+                                                : ${viewModel>status} === 'ERROR'
+                                                    ? 'Error'
+                                                    : 'Pendiente' }"
+                                            inverted="true"
+                                            state="{= ${viewModel>status} === 'OK'
+                                                ? 'Success'
+                                                : ${viewModel>status} === 'ERROR'
+                                                    ? 'Error'
+                                                    : 'Warning' }" />
+                                        <ObjectStatus
+                                            text="{viewModel>stage}"
+                                            icon="{= ${viewModel>status} === 'OK'
+                                                ? 'sap-icon://sys-enter-2'
+                                                : ${viewModel>status} === 'ERROR'
+                                                    ? 'sap-icon://alert'
+                                                    : 'sap-icon://process' }"
+                                            state="{= ${viewModel>status} === 'OK'
+                                                ? 'Success'
+                                                : ${viewModel>status} === 'ERROR'
+                                                    ? 'Error'
+                                                    : 'Information' }" />
+
+                                        <ObjectStatus
+                                            text="{viewModel>message}"
+                                            icon="{= ${viewModel>status} === 'OK'
+                                                ? 'sap-icon://sys-enter-2'
+                                                : ${viewModel>status} === 'ERROR'
+                                                    ? 'sap-icon://decline'
+                                                    : 'sap-icon://lateness' }"
+                                            state="{= ${viewModel>status} === 'OK'
+                                                ? 'Success'
+                                                : ${viewModel>status} === 'ERROR'
+                                                    ? 'Error'
+                                                    : 'Warning' }" />
+
+                                    </cells>
+                                </ColumnListItem>
+                            </items>
+                        </Table>
+                    </content>
+                </Panel>
+
+
+            </VBox>
+        </f:content>
+
+        <f:footer>
+
+            <OverflowToolbar id="otbFooter">
+                <!-- Nota informativa -->
+                <MessageStrip
+                    text="Base maestra en SAP: La tabla Z de contingencia almacena todos los registros con su estado y log para trazabilidad y reprocesos."
+                    type="Information"
+                    showIcon="true"
+                    class="" />
+
+                <!-- Acciones inferiores -->
+                <ToolbarSpacer />
+                <Button
+                    text="Ver Log Detallado"
+                    icon="sap-icon://list"
+                    type="Default"
+                    press=".onShowDetailedLog" />
+                <Button
+                    text="Descargar Log"
+                    icon="sap-icon://download"
+                    type="Emphasized"
+                    press=".onDownloadLog" />
+            </OverflowToolbar>
+
+        </f:footer>
+    </f:DynamicPage>
+</mvc:View>
