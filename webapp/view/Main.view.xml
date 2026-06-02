@@ -214,7 +214,7 @@
                     <content>
                         <Table
                             id="recordsTable"
-                            items="{viewModel>/records}"
+                            items="{oFilteredData>/}"
                             growing="true"
                             growingScrollToLoad="true"
                             inset="false">
@@ -265,9 +265,9 @@
                                                     ? 'Error'
                                                     : 'Warning' }" />
 
-                                        <Text text="{viewModel>id}" />
+                                        <Text text="{oFilteredData>Id}" />
 
-                                        <Text text="{viewModel>order}" />
+                                        <Text text="{oFilteredData>MVbelnPed}" />
 
                                         <VBox>
                                             <ObjectIdentifier

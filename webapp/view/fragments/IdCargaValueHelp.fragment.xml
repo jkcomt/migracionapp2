@@ -16,7 +16,7 @@
                 <SearchField
                     id="idCargaSearchField"
                     width="170px"
-                    placeholder="Buscar por ID, usuario o estado..."
+                    placeholder="Buscar por ID de Carga..."
                     liveChange=".onValueHelpSearch"/>
 
                 <DatePicker
@@ -29,7 +29,7 @@
                 <Input
                     id="usuarioSelectField"
                     width="170px"
-                    placeholder="#50123"
+                    placeholder="Usuario"
                     showValueHelp="false" />
 
                 <Select
