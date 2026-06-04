@@ -62,6 +62,21 @@
                                     </fb:control>
                                 </fb:FilterGroupItem>
 
+                                <!-- FileName -->
+                                <fb:FilterGroupItem
+                                    groupName="General"
+                                    name="FileName"
+                                    label="Nombre de Archivo"
+                                    visibleInFilterBar="true">
+                                    <fb:control>
+                                        <Input
+                                            id="fileNameInput"
+                                            width="170px"
+                                            placeholder="Nombre de Archivo"
+                                            editable="false"/>
+                                    </fb:control>
+                                </fb:FilterGroupItem>
+
                                 <!-- Fecha de Carga -->
                                 <fb:FilterGroupItem
                                     groupName="General"
@@ -241,9 +256,9 @@
                                 <Column>
                                     <Text text="Estado" />
                                 </Column>
-                                <Column minScreenWidth="Tablet" demandPopin="true">
+                                <!-- <Column minScreenWidth="Tablet" demandPopin="true">
                                     <Text text="Etapa" />
-                                </Column>
+                                </Column> -->
                                 <Column minScreenWidth="Tablet" demandPopin="true">
                                     <Text text="Mensaje de Log" />
                                 </Column>
@@ -268,36 +283,36 @@
                                         <Text text="{oFilteredData>Id}" />
 
                                         <Text text="{oFilteredData>MVbelnPed}" />
-
-                                        <VBox>
-                                            <ObjectIdentifier
-                                                title="{viewModel>delivery}"
-                                                class="sapUiTinyMarginBottom" />
-                                            <ObjectStatus
+                                        <Text text="{oFilteredData>MVbelnEnt}" />
+                                        <!-- <VBox> -->
+                                            <!-- <ObjectIdentifier
+                                                title="{oFilteredData>MVbelnEnt}"
+                                                class="sapUiTinyMarginBottom" /> -->
+                                            <!-- <ObjectStatus
                                                 class="sapUiSmallMarginBottom noWrapObjectStatus"
-                                                text="{viewModel>folio}"
+                                                text="{oFilteredData>folio}"
                                                 inverted="true"
-                                                state="Information" />
-                                        </VBox>
+                                                state="Information" /> -->
+                                        <!-- </VBox> -->
 
-                                        <Text text="{viewModel>sm}" />
+                                        <Text text="{oFilteredData>MMblnr}" />
 
                                         <Text text="{viewModel>transport}" />
 
                                         <ObjectStatus
                                             class="sapUiSmallMarginBottom noWrapObjectStatus"
-                                            text="{= ${viewModel>status} === 'OK'
+                                            text="{= ${oFilteredData>MStatus} === 'OK'
                                                 ? 'Procesado OK'
-                                                : ${viewModel>status} === 'ERROR'
+                                                : ${oFilteredData>MStatus} === 'ERROR'
                                                     ? 'Error'
                                                     : 'Pendiente' }"
                                             inverted="true"
-                                            state="{= ${viewModel>status} === 'OK'
+                                            state="{= ${oFilteredData>MStatus} === 'OK'
                                                 ? 'Success'
-                                                : ${viewModel>status} === 'ERROR'
+                                                : ${oFilteredData>MStatus} === 'ERROR'
                                                     ? 'Error'
                                                     : 'Warning' }" />
-                                        <ObjectStatus
+                                        <!-- <ObjectStatus
                                             text="{viewModel>stage}"
                                             icon="{= ${viewModel>status} === 'OK'
                                                 ? 'sap-icon://sys-enter-2'
@@ -308,7 +323,7 @@
                                                 ? 'Success'
                                                 : ${viewModel>status} === 'ERROR'
                                                     ? 'Error'
-                                                    : 'Information' }" />
+                                                    : 'Information' }" /> -->
 
                                         <ObjectStatus
                                             text="{viewModel>message}"

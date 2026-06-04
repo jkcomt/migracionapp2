@@ -6,7 +6,7 @@
     <Dialog
         id="idCargaValueHelpDialog"
         title="Seleccionar ID de Carga"
-        contentWidth="50%"
+        contentWidth="60%"
         contentHeight="400px"
         draggable="true"
         resizable="true">
@@ -15,7 +15,7 @@
             <OverflowToolbar>
                 <SearchField
                     id="idCargaSearchField"
-                    width="170px"
+                    width="240px"
                     placeholder="Buscar por ID de Carga..."
                     liveChange=".onValueHelpSearch"/>
 
@@ -41,7 +41,7 @@
                     <core:Item key="Procesado" text="Procesado" />
                     <core:Item key="Error" text="Error" />
                 </Select>
-
+                <ToolbarSpacer />
                 <Button
                     text="Buscar"
                     icon="sap-icon://search"
@@ -58,16 +58,19 @@
         <content>
             <Table
                 id="idCargaTable"
-                items="{oMainModel>/CargaMasiva}"
+                items="{path:'oMainModel>/CargaMasiva', sorter:{path:'LocalCreatedAt', descending:true}}"
                 mode="None"
                 growing="true"
                 growingThreshold="15">
 
                 <columns>
-                    <Column width="35%">
+                    <Column width="20%">
+                        <Text text="FileName" />
+                    </Column>
+                    <Column width="30%">
                         <Text text="ID Carga" />
                     </Column>
-                    <Column width="25%">
+                    <Column width="20%">
                         <Text text="Fecha de Carga" />
                     </Column>
                     <Column>
@@ -81,6 +84,7 @@
                 <items>
                     <ColumnListItem type="Active" press=".onValueHelpItemPress">
                         <cells>
+                            <Text text="{oMainModel>Filename}" />
                             <Text text="{oMainModel>UploadUuid}" />
                             <Text text="{oMainModel>LocalCreatedAt}" />
                             <Text text="{oMainModel>LocalCreatedBy}" />
