@@ -7,8 +7,9 @@ sap.ui.define([
     "sap/m/Button",
     "sap/m/library",
     "sap/m/Dialog",
-    "sap/ui/core/IconPool"
-], (Controller,JSONModel, Fragment, Filter, FilterOperator,Button,mobileLibrary,Dialog,IconPool) => {
+    "sap/ui/core/IconPool",
+    "sap/ui/model/Sorter"
+], (Controller,JSONModel, Fragment, Filter, FilterOperator,Button,mobileLibrary,Dialog,IconPool,Sorter) => {
     "use strict";
 
     // shortcut for sap.m.ButtonType
@@ -55,6 +56,7 @@ sap.ui.define([
 
         setCargaValuesToInput: function (oData) {
             this.byId("idCargaInput").setValue(oData.UploadUuid);
+            this.byId("fileNameInput").setValue(oData.Filename);
             this.byId("fechaCargaInput").setValue(oData.LocalCreatedAt.split("T")[0].split("-").reverse().join("-"));
             this.byId("usuarioSelect").setValue(oData.LocalCreatedBy);
             this.byId("estadoSelect").setValue(oData.Status);
@@ -99,7 +101,11 @@ sap.ui.define([
                     // new Filter("MStatus", FilterOperator.EQ, sEstadoSelect),
                 ];
 
-                const oListBinding = oMainModel.bindList("/DataExcel", null, null, aFilters);
+                const aSorters = [
+                    new Sorter("LocalCreatedAt", true) // true = descendente
+                ];
+
+                const oListBinding = oMainModel.bindList("/DataExcel", null, aSorters, aFilters);
 
                 const aContexts = await oListBinding.requestContexts();
 
