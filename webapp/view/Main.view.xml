@@ -298,7 +298,7 @@
                                                 text="Buscar"
                                                 icon="sap-icon://search"
                                                 type="Emphasized"
-                                                press=".onBuscar2" />
+                                                press=".onBuscarFiltro" />
 
                                             <Button
                                                 text="Limpiar"

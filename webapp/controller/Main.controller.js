@@ -9,8 +9,9 @@ sap.ui.define([
     "sap/m/Dialog",
     "sap/ui/core/IconPool",
     "sap/ui/model/Sorter",
-    "sap/m/URLHelper"
-], (Controller, JSONModel, Fragment, Filter, FilterOperator, Button, mobileLibrary, Dialog, IconPool, Sorter,URLHelper) => {
+    "sap/m/URLHelper",
+    "cl/copec/migrationapp/thirdparty/xlsx"
+], (Controller, JSONModel, Fragment, Filter, FilterOperator, Button, mobileLibrary, Dialog, IconPool, Sorter,URLHelper,XLSX) => {
     "use strict";
 
     // shortcut for sap.m.ButtonType
@@ -160,7 +161,7 @@ sap.ui.define([
             }
         },
 
-        onBuscar2: function () {
+        onBuscarFiltro: function () {
             var oTable = this.byId("recordsTable");
             var sFolio = this.byId("idFolioInput").getValue();
             var sPedido = this.byId("idPedidoInput").getValue();
@@ -211,12 +212,39 @@ sap.ui.define([
             this.byId("usuarioSelectField").setValue("");
             this.byId("estadoSelectField").setSelectedKey("Todos");
         },
-        onDownloadLog: function () {
+        onDownloadLog: async function () {
+            var aData = this.getView().getModel("oFilteredData").getData();
+
             var sUrl = sap.ui.require.toUrl(
-                "cl/copec/migrationapp/templates/Plantilla_LOG.xlsx"
+                "cl/copec/migrationapp/templates/PlantillaLog.xlsx"
             );
 
-            URLHelper.redirect(sUrl, true);
+            var oResponse = await fetch(sUrl);
+            var oArrayBuffer = await oResponse.arrayBuffer();
+
+            var oWorkbook = XLSX.read(oArrayBuffer, {
+                type: "array"
+            });
+
+            var sSheetName = oWorkbook.SheetNames[0];
+            var oSheet = oWorkbook.Sheets[sSheetName];
+
+            aData.forEach(function (oItem, iIndex) {
+                var iRow = iIndex + 2; // fila 1 = cabecera
+
+                oSheet["A" + iRow] = { t: "s", v: oItem.Id || "" };
+                oSheet["B" + iRow] = { t: "s", v: oItem.MVbelnPed || "" };
+                oSheet["C" + iRow] = { t: "s", v: oItem.MVbelnEnt || "" };
+                oSheet["D" + iRow] = { t: "s", v: oItem.MMblnr || "" };
+                oSheet["E" + iRow] = { t: "s", v: "" };
+                oSheet["F" + iRow] = { t: "s", v: oItem.MStatus || "" };
+                oSheet["G" + iRow] = { t: "s", v: oItem.MMsgtext || "" };
+            });
+
+            var sLastRow = aData.length + 1;
+            oSheet["!ref"] = "A1:G" + sLastRow;
+
+            XLSX.writeFile(oWorkbook, "Log_Carga_Masiva.xlsx");
         },
         onReadParams: async function () {
             let oComponentData = this.getOwnerComponent().getComponentData();
