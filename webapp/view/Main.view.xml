@@ -461,7 +461,7 @@
                 <ToolbarSpacer />
                 
                 <Button
-                    text="Descargar Log"
+                    text="Descargar Log de errores"
                     icon="sap-icon://download"
                     type="Emphasized"
                     press=".onDownloadLog" />
