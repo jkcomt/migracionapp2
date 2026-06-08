@@ -8,10 +8,8 @@ sap.ui.define([
     "sap/m/library",
     "sap/m/Dialog",
     "sap/ui/core/IconPool",
-    "sap/ui/model/Sorter",
-    "sap/m/URLHelper",
-    "cl/copec/migrationapp/thirdparty/xlsx"
-], (Controller, JSONModel, Fragment, Filter, FilterOperator, Button, mobileLibrary, Dialog, IconPool, Sorter,URLHelper,XLSX) => {
+    "sap/ui/model/Sorter"
+], (Controller, JSONModel, Fragment, Filter, FilterOperator, Button, mobileLibrary, Dialog, IconPool, Sorter) => {
     "use strict";
 
     // shortcut for sap.m.ButtonType
@@ -213,36 +211,37 @@ sap.ui.define([
             this.byId("estadoSelectField").setSelectedKey("Todos");
         },
         onDownloadLog: async function () {
+            
+            if (!window.XLSX) {
+                await new Promise(function (resolve, reject) {
+                    var oScript = document.createElement("script");
+                    oScript.src = "https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js";
+                    oScript.onload = resolve;
+                    oScript.onerror = reject;
+                    document.head.appendChild(oScript);
+                });
+            }
+
+            var XLSX = window.XLSX;
             var aData = this.getView().getModel("oFilteredData").getData();
 
-            var sUrl = sap.ui.require.toUrl(
-                "cl/copec/migrationapp/templates/PlantillaLog.xlsx"
-            );
-
-            var oResponse = await fetch(sUrl);
-            var oArrayBuffer = await oResponse.arrayBuffer();
-
-            var oWorkbook = XLSX.read(oArrayBuffer, {
-                type: "array"
+            var aHeaders = ["ID Registro", "Pedido", "Entrega (Folio)", "SM", "Transporte", "Estado", "Mensaje de Log"];
+            var aRows = aData.map(function (oItem) {
+                return [
+                    oItem.Id || "",
+                    oItem.MVbelnPed || "",
+                    oItem.MVbelnEnt || "",
+                    oItem.MMblnr || "",
+                    "",
+                    oItem.MStatus || "",
+                    oItem.MMsgtext || ""
+                ];
             });
 
-            var sSheetName = oWorkbook.SheetNames[0];
-            var oSheet = oWorkbook.Sheets[sSheetName];
-
-            aData.forEach(function (oItem, iIndex) {
-                var iRow = iIndex + 2; // fila 1 = cabecera
-
-                oSheet["A" + iRow] = { t: "s", v: oItem.Id || "" };
-                oSheet["B" + iRow] = { t: "s", v: oItem.MVbelnPed || "" };
-                oSheet["C" + iRow] = { t: "s", v: oItem.MVbelnEnt || "" };
-                oSheet["D" + iRow] = { t: "s", v: oItem.MMblnr || "" };
-                oSheet["E" + iRow] = { t: "s", v: "" };
-                oSheet["F" + iRow] = { t: "s", v: oItem.MStatus || "" };
-                oSheet["G" + iRow] = { t: "s", v: oItem.MMsgtext || "" };
-            });
-
-            var sLastRow = aData.length + 1;
-            oSheet["!ref"] = "A1:G" + sLastRow;
+            var aSheetData = [aHeaders].concat(aRows);
+            var oSheet = XLSX.utils.aoa_to_sheet(aSheetData);
+            var oWorkbook = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(oWorkbook, oSheet, "Log");
 
             XLSX.writeFile(oWorkbook, "Log_Carga_Masiva.xlsx");
         },
