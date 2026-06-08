@@ -167,7 +167,7 @@
                                     class="sapUiSmallMarginEnd" color="#0E73DF"></core:Icon>
 
                                 <VBox height="100%">
-                                    <Text text="1500" class="textEmphatized"></Text>
+                                    <Text id="txtTotalRegistros" text="0" class="textEmphatized"></Text>
                                     <Title text="Total Registros" />
                                 </VBox>
                             </HBox>
@@ -180,7 +180,7 @@
                                 <core:Icon src="sap-icon://accept" size="50px"
                                     class="sapUiSmallMarginEnd" color="#028C00"></core:Icon>
                                 <VBox height="100%">
-                                    <Text text="1420" class="textAccept"></Text>
+                                    <Text id="txtRegistrosProcesados" text="0" class="textAccept"></Text>
                                     <Title text="Total Procesados" />
                                 </VBox>
                             </HBox>
@@ -193,7 +193,7 @@
                                 <core:Icon src="sap-icon://alert" size="50px"
                                     class="sapUiSmallMarginEnd" color="#C70000"></core:Icon>
                                 <VBox height="100%">
-                                    <Text text="50" class="textAlert"></Text>
+                                    <Text id="txtRegistrosConError" text="0" class="textAlert"></Text>
                                     <Title text="Con Errores" />
                                 </VBox>
                             </HBox>
@@ -206,7 +206,7 @@
                                 <core:Icon src="sap-icon://synchronize" size="50px"
                                     class="sapUiSmallMarginEnd" color="#FF9100"></core:Icon>
                                 <VBox height="100%">
-                                    <Text text="30" class="textWarning"></Text>
+                                    <Text id="txtRegistrosPendientes" text="0" class="textWarning"></Text>
                                     <Title text="Pendientes" />
                                 </VBox>
                             </HBox>
@@ -363,7 +363,7 @@
                             </columns>
 
                             <items>
-                                <ColumnListItem type="Active" press=".onRecordPress">
+                                <ColumnListItem type="Active" press=".onNavToSalesOrder">
                                     <cells>
 
                                         <ObjectStatus
