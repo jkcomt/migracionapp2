@@ -79,6 +79,18 @@
                     <Column>
                         <Text text="Estado" />
                     </Column>
+                    <Column visible="false">
+                        <Text text="Total Registros" />
+                    </Column>
+                    <Column visible="false">
+                        <Text text="Total Procesados" />
+                    </Column>
+                    <Column visible="false">
+                        <Text text="Total Con Errores" />
+                    </Column>
+                    <Column visible="false">
+                        <Text text="Total Con Pendientes" />
+                    </Column>
                 </columns>
 
                 <items>
@@ -95,6 +107,10 @@
                                     : ${oMainModel>Status} === 'Error'
                                         ? 'Error'
                                         : 'Warning' }" />
+                            <Text text="{oMainModel>TotalRows}" />
+                            <Text text="{oMainModel>RowsSuccess}" />
+                            <Text text="{oMainModel>RowsError}" />
+                            <Text text="{oMainModel>RowsPend}" />
                         </cells>
                     </ColumnListItem>
                 </items>

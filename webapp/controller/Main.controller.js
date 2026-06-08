@@ -48,19 +48,29 @@ sap.ui.define([
             }.bind(this));
         },
 
-        onValueHelpItemPress: function (oEvent) {
+        onValueHelpItemPress: async function (oEvent) {
             var oData = oEvent.getSource().getBindingContext("oMainModel").getObject();
+            // await this.onSearchCarga(oData.UploadUuid);
             this.setCargaValuesToInput(oData);
             this.onValueHelpCancel();
         },
 
         setCargaValuesToInput: function (oData) {
+            //Datos Generales
             this.byId("idCargaInput").setValue(oData.UploadUuid);
             this.byId("fileNameInput").setValue(oData.Filename);
             this.byId("fechaCargaInput").setValue(oData.LocalCreatedAt.split("T")[0].split("-").reverse().join("-"));
             this.byId("usuarioSelect").setValue(oData.LocalCreatedBy);
             this.byId("estadoSelect").setValue(oData.Status);
+            
+            //Totales
+            this.byId("txtTotalRegistros").setText(oData.TotalRows);
+            this.byId("txtRegistrosProcesados").setText(oData.RowsSuccess);
+            this.byId("txtRegistrosConError").setText(oData.RowsError);
+            this.byId("txtRegistrosPendientes").setText(oData.RowsPend);
             this.onGetLogValues(oData);
+            
+
         },
 
         onGetLogValues: async function (oData) {
@@ -287,6 +297,98 @@ sap.ui.define([
             }
 
             this.oEscapePreventDialog.open();
+        },
+
+        //nav a app standard, con validación de intent
+
+        _isIntentSupported: function (sIntent) {
+            return new Promise(function (resolve, reject) {
+                try {
+                    var oCAN = sap.ushell && sap.ushell.Container && sap.ushell.Container.getService && sap.ushell.Container.getService("CrossApplicationNavigation");
+                    if (!oCAN) {
+                        return resolve(false);
+                    }
+
+                    // isIntentSupported accepts an array of intent strings
+                    // older implementations use jQuery.Deferred (.done/.fail)
+                    var aIntents = [sIntent];
+                    var oResult = oCAN.isIntentSupported(aIntents);
+
+                    if (oResult && oResult.done) {
+                        oResult.done(function (oRes) {
+                            // response shape may be {"#Semantic-action": {supported: true}} or without '#'
+                            var bSupported = false;
+                            if (oRes[sIntent] && oRes[sIntent].supported) {
+                                bSupported = true;
+                            } else if (oRes[sIntent.replace(/^#/, "")] && oRes[sIntent.replace(/^#/, "")].supported) {
+                                bSupported = true;
+                            } else {
+                                // try finding any supported key
+                                Object.keys(oRes).forEach(function (k) {
+                                    if (oRes[k] && oRes[k].supported) {
+                                        bSupported = true;
+                                    }
+                                });
+                            }
+                            resolve(bSupported);
+                        }).fail(function () {
+                            resolve(false);
+                        });
+                    } else if (oResult && typeof oResult.then === "function") {
+                        oResult.then(function (oRes) {
+                            var bSupported = false;
+                            if (oRes[sIntent] && oRes[sIntent].supported) {
+                                bSupported = true;
+                            } else if (oRes[sIntent.replace(/^#/, "")] && oRes[sIntent.replace(/^#/, "")].supported) {
+                                bSupported = true;
+                            } else {
+                                Object.keys(oRes).forEach(function (k) {
+                                    if (oRes[k] && oRes[k].supported) {
+                                        bSupported = true;
+                                    }
+                                });
+                            }
+                            resolve(bSupported);
+                        }).catch(function () {
+                            resolve(false);
+                        });
+                    } else {
+                        // unknown return type
+                        resolve(false);
+                    }
+                } catch (e) {
+                    resolve(false);
+                }
+            });
+        },
+
+        onNavToSalesOrder: async function () {
+            var sSalesOrder = "5000000123"; // tu parámetro
+            var sIntent = "#SalesOrder-displayFactSheet";
+            
+            var bSupported = await this._isIntentSupported(sIntent);
+            if (!bSupported) {
+                // intentar sin '#'
+                bSupported = await this._isIntentSupported(sIntent.replace(/^#/, ""));
+            }
+
+            if (bSupported) {
+                var oCrossAppNav = sap.ushell && sap.ushell.Container && sap.ushell.Container.getService && sap.ushell.Container.getService("CrossApplicationNavigation");
+                if (oCrossAppNav) {
+                    oCrossAppNav.toExternal({
+                        target: {
+                            semanticObject: "SalesOrder",
+                            action: "displayFactSheet"
+                        },
+                        params: {
+                            SalesOrder: sSalesOrder
+                        }
+                    });
+                    return;
+                }
+            }
+
+            sap.m.MessageToast.show("Destino no disponible en el catálogo FLP o servicio no accesible.");
         }
     });
 });
