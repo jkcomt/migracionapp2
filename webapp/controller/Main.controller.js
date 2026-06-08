@@ -225,10 +225,9 @@ sap.ui.define([
             var XLSX = window.XLSX;
             var aData = this.getView().getModel("oFilteredData").getData();
 
-            var aHeaders = ["ID Registro", "Pedido", "Entrega (Folio)", "SM", "Transporte", "Estado", "Mensaje de Log"];
+            var aHeaders = [ "Pedido", "Entrega (Folio)", "SM", "Transporte", "Estado", "Mensaje de Log"];
             var aRows = aData.map(function (oItem) {
-                return [
-                    oItem.Id || "",
+                return [                    
                     oItem.MVbelnPed || "",
                     oItem.MVbelnEnt || "",
                     oItem.MMblnr || "",
