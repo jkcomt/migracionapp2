@@ -73,7 +73,7 @@
                                             id="fileNameInput"
                                             width="170px"
                                             placeholder="Nombre de Archivo"
-                                            editable="false"/>
+                                            editable="false" />
                                     </fb:control>
                                 </fb:FilterGroupItem>
 
@@ -89,7 +89,7 @@
                                             width="195px"
                                             placeholder="e.g. 31/12/2026"
                                             displayFormat="dd/MM/yyyy"
-                                            valueFormat="yyyy-MM-dd" editable="false"/>
+                                            valueFormat="yyyy-MM-dd" editable="false" />
                                     </fb:control>
                                 </fb:FilterGroupItem>
 
@@ -100,7 +100,7 @@
                                     label="Usuario"
                                     visibleInFilterBar="true">
                                     <fb:control>
-                                        <Input id="usuarioSelect" editable="false"/>
+                                        <Input id="usuarioSelect" editable="false" />
                                     </fb:control>
                                 </fb:FilterGroupItem>
 
@@ -120,7 +120,7 @@
                                             <core:Item key="Procesado" text="Procesado" />
                                             <core:Item key="Error" text="Error" />
                                         </Select> -->
-                                        <Input id="estadoSelect" editable="false"/>
+                                        <Input id="estadoSelect" editable="false" />
                                     </fb:control>
                                 </fb:FilterGroupItem>
 
@@ -168,7 +168,7 @@
 
                                 <VBox height="100%">
                                     <Text text="1500" class="textEmphatized"></Text>
-                                    <Title text="Total Registros"/>
+                                    <Title text="Total Registros" />
                                 </VBox>
                             </HBox>
                         </Panel>
@@ -181,7 +181,7 @@
                                     class="sapUiSmallMarginEnd" color="#028C00"></core:Icon>
                                 <VBox height="100%">
                                     <Text text="1420" class="textAccept"></Text>
-                                    <Title text="Total Procesados"/>
+                                    <Title text="Total Procesados" />
                                 </VBox>
                             </HBox>
                         </Panel>
@@ -194,7 +194,7 @@
                                     class="sapUiSmallMarginEnd" color="#C70000"></core:Icon>
                                 <VBox height="100%">
                                     <Text text="50" class="textAlert"></Text>
-                                    <Title text="Con Errores"/>
+                                    <Title text="Con Errores" />
                                 </VBox>
                             </HBox>
                         </Panel>
@@ -207,12 +207,109 @@
                                     class="sapUiSmallMarginEnd" color="#FF9100"></core:Icon>
                                 <VBox height="100%">
                                     <Text text="30" class="textWarning"></Text>
-                                    <Title text="Pendientes"/>
+                                    <Title text="Pendientes" />
                                 </VBox>
                             </HBox>
                         </Panel>
 
                     </HBox>
+                </Panel>
+                <!-- Filtros Detalle -->
+                <Panel class="sapUiNoContentPadding sapUiSmallMarginBottom">
+                    <content>
+                        <fb:FilterBar
+                            id="filterBar2"
+                            class="customFilterBar"
+                            useToolbar="false"
+                            showGoOnFB="false"
+                            showClearOnFB="false"
+                            showFilterConfiguration="false"
+                        >
+                            <fb:filterGroupItems>
+                                <!-- ID -->
+                                <fb:FilterGroupItem
+                                    groupName="General"
+                                    name="IdCarga"
+                                    label="Id Folio"
+                                    visibleInFilterBar="true">
+                                    <fb:control>
+                                        <Input
+                                            id="idFolioInput"
+                                            width="170px"
+                                            placeholder="#50123" />
+                                    </fb:control>
+                                </fb:FilterGroupItem>
+                                <!-- Pedido -->
+                                <fb:FilterGroupItem
+                                    groupName="General"
+                                    name="Pedido"
+                                    label="Pedido"
+                                    visibleInFilterBar="true">
+                                    <fb:control>
+                                        <Input
+                                            id="idPedidoInput"
+                                            width="170px"
+                                            placeholder="Pedido" />
+                                    </fb:control>
+                                </fb:FilterGroupItem>
+                                <!-- FileName -->
+                                <fb:FilterGroupItem
+                                    groupName="General"
+                                    name="FileName"
+                                    label="Entrega"
+                                    visibleInFilterBar="true">
+                                    <fb:control>
+                                        <Input
+                                            id="entregaInput"
+                                            width="170px"
+                                            placeholder="Entrega" />
+                                    </fb:control>
+                                </fb:FilterGroupItem>
+                            
+                                <!-- Estado -->
+                                <fb:FilterGroupItem
+                                    groupName="General"
+                                    name="Estado"
+                                    label="Estado"
+                                    visibleInFilterBar="true">
+                                    <fb:control>
+                                        <!-- <Select
+                                            id="estadoSelect"
+                                            width="140px"
+                                            selectedKey="Todos">
+                                            <core:Item key="Todos" text="Todos" />
+                                            <core:Item key="Pendiente" text="Pendiente" />
+                                            <core:Item key="Procesado" text="Procesado" />
+                                            <core:Item key="Error" text="Error" />
+                                        </Select> -->
+                                        <Input id="estadoSelect2" />
+                                    </fb:control>
+                                </fb:FilterGroupItem>
+                                <fb:FilterGroupItem
+                                    groupName="General"
+                                    name="Acciones"
+                                    label=""
+                                    visibleInFilterBar="true">
+                                    <fb:control>
+                                        <HBox
+                                            alignItems="End"
+                                            class="filterBarButtons">
+                                            <Button
+                                                text="Buscar"
+                                                icon="sap-icon://search"
+                                                type="Emphasized"
+                                                press=".onBuscar2" />
+
+                                            <Button
+                                                text="Limpiar"
+                                                type="Transparent"
+                                                press=".onLimpiar2" />
+                                        </HBox>
+                                    </fb:control>
+                                </fb:FilterGroupItem>
+                            </fb:filterGroupItems>
+                        </fb:FilterBar>
+                    </content>
                 </Panel>
             </f:DynamicPageHeader>
         </f:header>
@@ -232,6 +329,7 @@
                             items="{oFilteredData>/}"
                             growing="true"
                             growingScrollToLoad="true"
+                            growingThreshold="5"
                             inset="false">
 
                             <columns>
@@ -239,7 +337,7 @@
                                     <Text text="" />
                                 </Column>
                                 <Column>
-                                    <Text text="ID Registro" />
+                                    <Text text="ID Folio" />
                                 </Column>
                                 <Column>
                                     <Text text="Pedido" />
@@ -285,10 +383,10 @@
                                         <Text text="{oFilteredData>MVbelnPed}" />
                                         <Text text="{oFilteredData>MVbelnEnt}" />
                                         <!-- <VBox> -->
-                                            <!-- <ObjectIdentifier
+                                        <!-- <ObjectIdentifier
                                                 title="{oFilteredData>MVbelnEnt}"
                                                 class="sapUiTinyMarginBottom" /> -->
-                                            <!-- <ObjectStatus
+                                        <!-- <ObjectStatus
                                                 class="sapUiSmallMarginBottom noWrapObjectStatus"
                                                 text="{oFilteredData>folio}"
                                                 inverted="true"
@@ -305,7 +403,7 @@
                                                 ? 'Procesado OK'
                                                 : ${oFilteredData>MStatus} === 'ERROR'
                                                     ? 'Error'
-                                                    : 'Pendiente' }"
+                                                    : ${oFilteredData>MStatus} }"
                                             inverted="true"
                                             state="{= ${oFilteredData>MStatus} === 'OK'
                                                 ? 'Success'
@@ -361,11 +459,7 @@
 
                 <!-- Acciones inferiores -->
                 <ToolbarSpacer />
-                <Button
-                    text="Ver Log Detallado"
-                    icon="sap-icon://list"
-                    type="Default"
-                    press=".onShowDetailedLog" />
+                
                 <Button
                     text="Descargar Log"
                     icon="sap-icon://download"

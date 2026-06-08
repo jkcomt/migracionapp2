@@ -8,15 +8,16 @@ sap.ui.define([
     "sap/m/library",
     "sap/m/Dialog",
     "sap/ui/core/IconPool",
-    "sap/ui/model/Sorter"
-], (Controller,JSONModel, Fragment, Filter, FilterOperator,Button,mobileLibrary,Dialog,IconPool,Sorter) => {
+    "sap/ui/model/Sorter",
+    "sap/m/URLHelper"
+], (Controller, JSONModel, Fragment, Filter, FilterOperator, Button, mobileLibrary, Dialog, IconPool, Sorter,URLHelper) => {
     "use strict";
 
     // shortcut for sap.m.ButtonType
-	var ButtonType = mobileLibrary.ButtonType;
+    var ButtonType = mobileLibrary.ButtonType;
 
-	// shortcut for sap.m.DialogType
-	var DialogType = mobileLibrary.DialogType;
+    // shortcut for sap.m.DialogType
+    var DialogType = mobileLibrary.DialogType;
 
     return Controller.extend("cl.copec.migrationapp.migrationapp.controller.Main", {
         onInit() {
@@ -35,7 +36,7 @@ sap.ui.define([
                 }.bind(this));
             }
             this._oIdCargaDialog.then(function (oDialog) {
-                
+
                 var oTable = this.byId("idCargaTable");
                 if (oTable) {
                     oTable.getBinding("items").filter([]);
@@ -64,25 +65,25 @@ sap.ui.define([
         },
 
         onGetLogValues: async function (oData) {
-            var sIdCarga,sLocalCreatedAt,sUsuarioSelected,sEstadoSelect,nDateValue;
+            var sIdCarga, sLocalCreatedAt, sUsuarioSelected, sEstadoSelect, nDateValue;
             var that = this;
-            if(oData.UploadUuid){
+            if (oData.UploadUuid) {
                 sIdCarga = oData.UploadUuid;
-            }else{
+            } else {
                 return;
             }
 
-            if(oData.LocalCreatedAt){
+            if (oData.LocalCreatedAt) {
                 sLocalCreatedAt = new Date(oData.LocalCreatedAt);
                 nDateValue = new Date(sLocalCreatedAt);
                 nDateValue.setDate(nDateValue.getDate() + 1);
             }
 
-            if(oData.LocalCreatedBy){
-                sUsuarioSelected = oData.LocalCreatedBy;                
+            if (oData.LocalCreatedBy) {
+                sUsuarioSelected = oData.LocalCreatedBy;
             }
 
-            if(oData.Status){
+            if (oData.Status) {
                 sEstadoSelect = oData.Status;
             }
 
@@ -90,7 +91,7 @@ sap.ui.define([
 
             try {
 
-                const aFilters =[
+                const aFilters = [
                     new Filter("IdCarga", FilterOperator.EQ, sIdCarga),
                     new Filter("HasDraftEntity", FilterOperator.EQ, false)
                     // new Filter({filters: [
@@ -138,10 +139,12 @@ sap.ui.define([
             if (sDateValue) {
                 let nDateValue = new Date(sDateValue);
                 nDateValue.setDate(nDateValue.getDate() + 1);
-                aFilters.push(new Filter({filters: [
-                    new Filter("LocalCreatedAt", FilterOperator.GE, sDateValue.toISOString()),
-                    new Filter("LocalCreatedAt", FilterOperator.LT, nDateValue.toISOString())
-                ], and: true}));
+                aFilters.push(new Filter({
+                    filters: [
+                        new Filter("LocalCreatedAt", FilterOperator.GE, sDateValue.toISOString()),
+                        new Filter("LocalCreatedAt", FilterOperator.LT, nDateValue.toISOString())
+                    ], and: true
+                }));
             }
             if (sUserValue) {
                 aFilters.push(new Filter("LocalCreatedBy", FilterOperator.EQ, sUserValue));
@@ -151,12 +154,55 @@ sap.ui.define([
             }
 
             try {
-                oTable.getBinding("items").filter(aFilters);                
+                oTable.getBinding("items").filter(aFilters);
             } catch (error) {
                 that.onMessageDialogPress("Error al aplicar filtros: " + error.message);
             }
         },
 
+        onBuscar2: function () {
+            var oTable = this.byId("recordsTable");
+            var sFolio = this.byId("idFolioInput").getValue();
+            var sPedido = this.byId("idPedidoInput").getValue();
+            var sEntrega = this.byId("entregaInput").getValue();
+            
+            var sEstado = this.byId("estadoSelect2").getValue();
+
+            var aFilters = [];
+
+            if (sFolio) {
+                aFilters.push(new Filter("Id", FilterOperator.Contains, sFolio));
+            }
+            if (sPedido) {
+                aFilters.push(new Filter("MVbelnPed", FilterOperator.Contains, sPedido));
+            }
+
+            if (sEntrega) {
+                aFilters.push(new Filter("MVbelnEnt", FilterOperator.Contains, sEntrega));
+            }
+
+            if (sEstado && sEstado !== "Todos") {
+                aFilters.push(new Filter("MStatus", FilterOperator.EQ, sEstado));
+            }
+
+            try {
+                var oBinding = oTable.getBinding("items");
+
+                if (oBinding) {
+                    oBinding.filter(aFilters);
+                }
+            } catch (error) {
+                this.onMessageDialogPress("Error al aplicar filtros: " + error.message);
+            }
+        },
+        onLimpiar2: function () {
+            var oTable = this.byId("recordsTable");
+            oTable.getBinding("items").filter([]);
+            this.byId("idFolioInput").setValue("");
+            this.byId("idPedidoInput").setValue("");
+            this.byId("entregaInput").setValue("");
+            this.byId("estadoSelect2").setSelectedKey("Todos");
+        },
         onLimpiar: function () {
             var oTable = this.byId("idCargaTable");
             oTable.getBinding("items").filter([]);
@@ -165,7 +211,13 @@ sap.ui.define([
             this.byId("usuarioSelectField").setValue("");
             this.byId("estadoSelectField").setSelectedKey("Todos");
         },
+        onDownloadLog: function () {
+            var sUrl = sap.ui.require.toUrl(
+                "cl/copec/migrationapp/templates/Plantilla_LOG.xlsx"
+            );
 
+            URLHelper.redirect(sUrl, true);
+        },
         onReadParams: async function () {
             let oComponentData = this.getOwnerComponent().getComponentData();
             if (oComponentData && oComponentData.startupParameters) {
@@ -181,34 +233,34 @@ sap.ui.define([
             const oModel = this.getOwnerComponent().getModel("oMainModel");
             const sPath = "/CargaMasiva('" + sIdCarga + "')";
             var that = this;
-             try {
+            try {
                 const oContextBinding = oModel.bindContext(sPath);
                 const oData = await oContextBinding.requestObject();
                 that.setCargaValuesToInput(oData);
-            } catch (oError) {                
+            } catch (oError) {
                 // console.error("Error al leer producto", oError);
                 that.onMessageDialogPress("No se encontró la carga con Id: " + sIdCarga);
             }
         },
 
         onMessageDialogPress: function (sMessage) {
-			if (!this.oEscapePreventDialog) {
-				this.oEscapePreventDialog = new Dialog({
-					title: "Aviso",
-					content: new Text({ text: sMessage }).addStyleClass("sapUiSmallMargin"),
-					buttons: [
-						new Button({
-							type: ButtonType.Emphasized,
-							text: "Cerrar",
-							press: function () {
-								this.oEscapePreventDialog.close();
-							}.bind(this)
-						})
-					]
-				});
-			}
+            if (!this.oEscapePreventDialog) {
+                this.oEscapePreventDialog = new Dialog({
+                    title: "Aviso",
+                    content: new Text({ text: sMessage }).addStyleClass("sapUiSmallMargin"),
+                    buttons: [
+                        new Button({
+                            type: ButtonType.Emphasized,
+                            text: "Cerrar",
+                            press: function () {
+                                this.oEscapePreventDialog.close();
+                            }.bind(this)
+                        })
+                    ]
+                });
+            }
 
-			this.oEscapePreventDialog.open();
-		}        
+            this.oEscapePreventDialog.open();
+        }
     });
 });
