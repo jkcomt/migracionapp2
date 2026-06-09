@@ -1,7 +1,7 @@
 {
   "_version": "1.60.0",
   "sap.app": {
-    "id": "cl.copec.migrationapp.migrationapp",
+    "id": "cl.copec.zui5sdapplogmig",
     "type": "application",
     "i18n": "i18n/i18n.properties",
     "applicationVersion": {
@@ -73,7 +73,7 @@
       "i18n": {
         "type": "sap.ui.model.resource.ResourceModel",
         "settings": {
-          "bundleName": "cl.copec.migrationapp.migrationapp.i18n.i18n"
+          "bundleName": "cl.copec.zui5sdapplogmig.i18n.i18n"
         }
       },
       "oMainModel": {
@@ -101,9 +101,9 @@
         "transition": "slide",
         "type": "View",
         "viewType": "XML",
-        "path": "cl.copec.migrationapp.migrationapp.view",
+        "path": "cl.copec.zui5sdapplogmig.view",
         "async": true,
-        "viewPath": "cl.copec.migrationapp.migrationapp.view"
+        "viewPath": "cl.copec.zui5sdapplogmig.view"
       },
       "routes": [
         {
@@ -122,7 +122,7 @@
       }
     },
     "rootView": {
-      "viewName": "cl.copec.migrationapp.migrationapp.view.App",
+      "viewName": "cl.copec.zui5sdapplogmig.view.App",
       "type": "XML",
       "id": "App",
       "async": true

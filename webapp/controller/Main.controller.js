@@ -18,7 +18,7 @@ sap.ui.define([
     // shortcut for sap.m.DialogType
     var DialogType = mobileLibrary.DialogType;
 
-    return Controller.extend("cl.copec.migrationapp.migrationapp.controller.Main", {
+    return Controller.extend("cl.copec.zui5sdapplogmig.controller.Main", {
         onInit() {
             this.onReadParams();
         },
@@ -27,7 +27,7 @@ sap.ui.define([
             if (!this._oIdCargaDialog) {
                 this._oIdCargaDialog = Fragment.load({
                     id: this.getView().getId(),
-                    name: "cl.copec.migrationapp.migrationapp.view.fragments.IdCargaValueHelp",
+                    name: "cl.copec.zui5sdapplogmig.view.fragments.IdCargaValueHelp",
                     controller: this
                 }).then(function (oDialog) {
                     this.getView().addDependent(oDialog);

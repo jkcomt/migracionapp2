@@ -2,7 +2,7 @@
 
 specVersion: "4.0"
 metadata:
-  name: cl.copec.migrationapp.migrationapp
+  name: cl.copec.zui5sdapplogmig
 type: application
 builder:
   resources:
@@ -17,7 +17,7 @@ builder:
           url: https://vhohcs4dci.sap.copec.cl:44300/
           client: '400'
         app:
-          name: ZSD_APP_LOG_MIG
+          name: ZUI5_APP_LOGMIG
           package: ZCOPEC_SD
           transport: S4DK908642
         exclude:

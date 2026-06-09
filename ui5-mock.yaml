@@ -2,7 +2,7 @@
 
 specVersion: "4.0"
 metadata:
-  name: cl.copec.migrationapp.migrationapp
+  name: cl.copec.zui5sdapplogmig
 type: application
 server:
   customMiddleware:

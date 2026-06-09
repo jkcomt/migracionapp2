@@ -1,4 +1,4 @@
-<mvc:View controllerName="cl.copec.migrationapp.migrationapp.controller.App"
+<mvc:View controllerName="cl.copec.zui5sdapplogmig.controller.App"
     displayBlock="true"
     xmlns:mvc="sap.ui.core.mvc"
     xmlns="sap.m">

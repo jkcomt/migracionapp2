@@ -14,7 +14,7 @@ sap.ui.define([
 			// start the app UI component
 			this.iStartMyUIComponent({
 				componentConfig: {
-					name: "cl.copec.migrationapp.migrationapp",
+					name: "cl.copec.zui5sdapplogmig",
 					async: true
 				},
 				hash: oOptions.hash,

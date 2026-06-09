@@ -1,5 +1,5 @@
 sap.ui.define([
-	"cl/copec/migrationapp/migrationapp/test/unit/controller/Main.controller"
+	"cl/copec/zui5sdapplogmig/test/unit/controller/Main.controller"
 ], function () {
 	"use strict";
 });

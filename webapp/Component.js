@@ -1,10 +1,10 @@
 sap.ui.define([
     "sap/ui/core/UIComponent",
-    "cl/copec/migrationapp/migrationapp/model/models"
+    "cl/copec/zui5sdapplogmig/model/models"
 ], (UIComponent, models) => {
     "use strict";
 
-    return UIComponent.extend("cl.copec.migrationapp.migrationapp.Component", {
+    return UIComponent.extend("cl.copec.zui5sdapplogmig.Component", {
         metadata: {
             manifest: "json",
             interfaces: [

@@ -1,7 +1,7 @@
 /*global QUnit*/
 
 sap.ui.define([
-	"cl/copec/migrationapp/migrationapp/controller/Main.controller"
+	"cl/copec/zui5sdapplogmig/controller/Main.controller"
 ], function (Controller) {
 	"use strict";
 

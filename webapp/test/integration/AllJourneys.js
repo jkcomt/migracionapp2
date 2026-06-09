@@ -7,7 +7,7 @@ sap.ui.define([
 
 	Opa5.extendConfig({
 		arrangements: new Startup(),
-		viewNamespace: "cl.copec.migrationapp.migrationapp.view.",
+		viewNamespace: "cl.copec.zui5sdapplogmig.view.",
 		autoWait: true
 	});
 });

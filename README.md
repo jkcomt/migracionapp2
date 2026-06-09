@@ -8,16 +8,16 @@
 |**Template Used**<br>Basic V4|
 |**Service Type**<br>SAP System (ABAP On-Premise)|
 |**Service URL**<br>https://vhohcs4dci.sap.copec.cl:44300/sap/opu/odata4/sap/zui_carga_masiva_o4/srvd/sap/zsd_sd_carga_masiva/0001/|
-|**Module Name**<br>migrationapp|
+|**Module Name**<br>zui5sdapplogmig|
 |**Application Title**<br>Log de Carga Masiva|
-|**Namespace**<br>cl.copec.migrationapp|
+|**Namespace**<br>cl.copec.zui5sdapplogmig|
 |**UI5 Theme**<br>sap_horizon|
 |**UI5 Version**<br>1.120.30|
 |**Enable TypeScript**<br>False|
 |**Add Eslint configuration**<br>True, see https://www.npmjs.com/package/@sap-ux/eslint-plugin-fiori-tools#rules for the eslint rules.|
 |**Value Help Metadata**<br>Downloaded for external services|
 
-## migrationapp
+## zui5sdapplogmig
 
 Log de Carga Masiva
 

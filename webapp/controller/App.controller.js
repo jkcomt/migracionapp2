@@ -3,7 +3,7 @@ sap.ui.define([
 ], (BaseController) => {
   "use strict";
 
-  return BaseController.extend("cl.copec.migrationapp.migrationapp.controller.App", {
+  return BaseController.extend("cl.copec.zui5sdapplogmig.controller.App", {
       onInit() {
       }
   });
