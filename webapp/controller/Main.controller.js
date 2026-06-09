@@ -18,6 +18,8 @@ sap.ui.define([
     // shortcut for sap.m.DialogType
     var DialogType = mobileLibrary.DialogType;
 
+    this._IdCarga = null;
+
     return Controller.extend("cl.copec.zui5sdapplogmig.controller.Main", {
         onInit() {
             this.onReadParams();
@@ -51,6 +53,11 @@ sap.ui.define([
         onValueHelpItemPress: async function (oEvent) {
             var oData = oEvent.getSource().getBindingContext("oMainModel").getObject();
             // await this.onSearchCarga(oData.UploadUuid);
+            this._IdCarga = oData.UploadUuid;
+            
+            var btnViewDetailLog = this.byId("btnViewDetailLog");
+            btnViewDetailLog.setEnabled(true);
+
             this.setCargaValuesToInput(oData);
             this.onValueHelpCancel();
         },
@@ -224,7 +231,9 @@ sap.ui.define([
             
             if (!window.XLSX) {
                 await new Promise(function (resolve, reject) {
+                    // eslint-disable-next-line @sap-ux/fiori-tools/sap-no-element-creation
                     var oScript = document.createElement("script");
+                    // eslint-disable-next-line @sap-ux/fiori-tools/sap-no-hardcoded-url
                     oScript.src = "https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js";
                     oScript.onload = resolve;
                     oScript.onerror = reject;
@@ -362,8 +371,8 @@ sap.ui.define([
             });
         },
 
-        onNavToSalesOrder: async function () {
-            var sSalesOrder = "5000000123"; // tu parámetro
+        onNavToSalesOrder: async function (oEvent) {
+            var sSalesOrder = oEvent.getSource().getBindingContext("oFilteredData").getObject().MVbelnPed; // parámetro
             var sIntent = "#SalesOrder-displayFactSheet";
             
             var bSupported = await this._isIntentSupported(sIntent);
@@ -389,6 +398,14 @@ sap.ui.define([
             }
 
             sap.m.MessageToast.show("Destino no disponible en el catálogo FLP o servicio no accesible.");
+        },
+
+        onViewDetailLog: function() {
+            //TODO: Implementar navegación a detalle de log
+            var router = sap.ui.core.UIComponent.getRouterFor(this);
+            router.navTo("RouteDetailLog", {
+                idcarga: this._IdCarga
+            });
         }
     });
 });

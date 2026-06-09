@@ -459,7 +459,14 @@
 
                 <!-- Acciones inferiores -->
                 <ToolbarSpacer />
-                
+                <Button
+                    id="btnViewDetailLog"
+                    text="Ver Log detallado"
+                    icon="sap-icon://download"
+                    type="Default"
+                    press=".onViewDetailLog"
+                    enabled="false" />
+
                 <Button
                     text="Descargar Log de errores"
                     icon="sap-icon://download"

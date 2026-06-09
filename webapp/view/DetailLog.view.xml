@@ -1,0 +1,176 @@
+<mvc:View controllerName="cl.copec.zui5sdapplogmig.controller.DetailLog"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:f="sap.f"
+    xmlns:layout="sap.ui.layout"
+    xmlns:fb="sap.ui.comp.filterbar"
+    displayBlock="true">
+    <f:DynamicPage id="DetailPage" fitContent="true" showFooter="true" headerExpanded="true"
+        toggleHeaderOnTitleClick="false"
+        preserveHeaderStateOnScroll="true">
+        <f:title>
+            <f:DynamicPageTitle>
+                <f:heading>
+                    <HBox alignItems="Center" renderType="Bare">
+                        <Title
+                            text="Log Detalle - {oDetailLogIDCarga>/IdCarga}" 
+                            level="H2" />
+                    </HBox>
+                </f:heading>
+            </f:DynamicPageTitle>
+        </f:title>
+        <f:header>
+            <f:DynamicPageHeader>
+                <Panel class="sapUiNoContentPadding sapUiSmallMarginBottom">
+                    <content>
+                        <fb:FilterBar
+                            id="filterDetailBar"
+                            class="customFilterBar"
+                            useToolbar="false"
+                            showGoOnFB="false"
+                            showClearOnFB="false"
+                            showFilterConfiguration="false"
+                        >
+                            <fb:filterGroupItems>
+                                <!-- ID de Carga -->
+                                <!-- <fb:FilterGroupItem
+                                    groupName="General"
+                                    name="idCarga"
+                                    label="ID Carga"
+                                    visibleInFilterBar="true">
+                                    <fb:control>
+                                        <Input
+                                            id="idCarga"
+                                            width="170px"
+                                            placeholder="ID Carga" />
+                                    </fb:control>
+                                </fb:FilterGroupItem> -->
+
+                                <!-- ID Log -->
+                                <fb:FilterGroupItem
+                                    groupName="General"
+                                    name="idlog"
+                                    label="ID Log"
+                                    visibleInFilterBar="true">
+                                    <fb:control>
+                                        <Input id="idLog" placeholder="ID Log" />
+                                    </fb:control>
+                                </fb:FilterGroupItem>
+
+                                <!-- ID Factura -->
+                                <fb:FilterGroupItem
+                                    groupName="General"
+                                    name="idfact"
+                                    label="ID Factura"
+                                    visibleInFilterBar="true">
+                                    <fb:control>
+                                        <Input id="idFact" placeholder="ID Factura" />
+                                    </fb:control>
+                                </fb:FilterGroupItem>
+
+                                <fb:FilterGroupItem
+                                    groupName="General"
+                                    name="Acciones"
+                                    label=""
+                                    visibleInFilterBar="true">
+                                    <fb:control>
+                                        <HBox
+                                            alignItems="End"
+                                            class="filterBarButtons">
+                                            <Button
+                                                text="Buscar"
+                                                icon="sap-icon://search"
+                                                type="Emphasized"
+                                                press=".onBuscarDetailFiltro" />
+
+                                            <Button
+                                                text="Limpiar"
+                                                type="Transparent"
+                                                press=".onLimpiarDetailFiltro" />
+                                        </HBox>
+                                    </fb:control>
+                                </fb:FilterGroupItem>
+
+
+                            </fb:filterGroupItems>
+                        </fb:FilterBar>
+                    </content>
+                </Panel>
+            </f:DynamicPageHeader>
+        </f:header>
+
+        <f:content>
+            <VBox class="">
+                <!-- Detalle -->
+                <Panel
+                    headerText="Detalle de Registros"
+                    expandable="false"
+                    class="sapUiNoContentPadding sapUiSmallMarginBottom">
+
+                    <content>
+                        <Table
+                            id="recordsLogTable"
+                            items="{oDetailLogData>/}"
+                            growing="true"
+                            growingScrollToLoad="true"
+                            growingThreshold="5"
+                            inset="false">
+
+                            <columns>
+                                <Column>
+                                    <Text text="ID Log" />
+                                </Column>
+                                <Column>
+                                    <Text text="ID Factura" />
+                                </Column>
+                                <Column minScreenWidth="Tablet" demandPopin="true">
+                                    <Text text="Tipo" />
+                                </Column>
+                                <Column minScreenWidth="Tablet" demandPopin="true">
+                                    <Text text="Mensaje" />
+                                </Column>
+                                <Column minScreenWidth="Desktop" demandPopin="true">
+                                    <Text text="Creado Por" />
+                                </Column>
+                                <Column>
+                                    <Text text="Fecha de Creación" />
+                                </Column>
+                            </columns>
+
+                            <items>
+                                <ColumnListItem>
+                                    <cells>
+
+                                        <!-- <ObjectStatus
+                                            icon="{= ${viewModel>status} === 'OK'
+                                                ? 'sap-icon://sys-enter-2'
+                                                : ${viewModel>status} === 'ERROR'
+                                                    ? 'sap-icon://message-error'
+                                                    : 'sap-icon://pending' }"
+                                            state="{= ${viewModel>status} === 'OK'
+                                                ? 'Success'
+                                                : ${viewModel>status} === 'ERROR'
+                                                    ? 'Error'
+                                                    : 'Warning' }" /> -->
+
+                                        <Text text="{oDetailLogData>IdLog}" />
+                                        <Text text="{oDetailLogData>IdFact}" />
+                                        <Text text="{oDetailLogData>Type}" />
+                                        <Text text="{oDetailLogData>Msg}" />
+                                        <Text text="{oDetailLogData>LocalCreatedBy}" />
+                                        <Text text="{oDetailLogData>LocalCreatedAt}" />
+
+
+                                    </cells>
+                                </ColumnListItem>
+                            </items>
+                        </Table>
+                    </content>
+                </Panel>
+
+
+            </VBox>
+        </f:content>
+    </f:DynamicPage>
+</mvc:View>

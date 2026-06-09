@@ -103,21 +103,34 @@
         "viewType": "XML",
         "path": "cl.copec.zui5sdapplogmig.view",
         "async": true,
-        "viewPath": "cl.copec.zui5sdapplogmig.view"
+        "viewPath": "cl.copec.zui5sdapplogmig.view",
+        "clearControlAggregation": false
       },
       "routes": [
         {
           "name": "RouteMain",
           "pattern": ":?query:",
-          "target": [
-            "TargetMain"
-          ]
+          "target": ["TargetMain"]
+        },
+        {
+          "name": "RouteDetailLog",
+          "pattern": "DetailLog/{idcarga}",
+          "target": ["TargetDetailLog"]
         }
       ],
       "targets": {
         "TargetMain": {
+          "transition": "slide",
+          "clearControlAggregation": false,
           "id": "Main",
           "name": "Main"
+        },
+        "TargetDetailLog": {
+          "viewType": "XML",
+          "transition": "slide",
+          "id": "DetailLog",
+          "name": "DetailLog",
+          "viewLevel": 2
         }
       }
     },
